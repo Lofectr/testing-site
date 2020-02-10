@@ -10,17 +10,18 @@
 	<div id="selectActionForm" align="right">
 		<div id="navigration" align="right">Навигация</div>
 
-		{% csrf_token %}
-		<select name="select" id="id_select" style="cursor: pointer;">
-  			<option value="0" selected="selected" hidden="hidden">Выбирите действие</option>
-		  	<option value="1">Добавить куратора</option>
-		  	<option value="2">Добавить школу</option>
-		  	<option value="3">Открыть сезон тестирования</option>
-		  	<option value="4">Добавить тест</option>
-		 	<option value="5">Посмотреть статистику</option>
-		</select>
-		<input type="button" value="Выбрать" style="color:black; cursor: pointer;" id="button_choose">
-
+		<form action="" method="post">
+			{% csrf_token %}
+			<select name="select" id="id_select" style="cursor: pointer;">
+	  			<option value="0" selected="selected" hidden="hidden">Выбирите действие</option>
+			  	<option value="1">Добавить куратора</option>
+			  	<option value="2">Добавить школу</option>
+			  	<option value="3">Открыть сезон тестирования</option>
+			  	<option value="4">Добавить тест</option>
+			 	<option value="5">Посмотреть статистику</option>
+			</select>
+			<input type="submit" value="Выбрать" style="color:black; cursor: pointer;" id="button_choose">
+		</form>
 		<div style="cursor: default;font-size: 0.9vw">
 			{% if current == "0" %}
 			Выберите действие которое хотите осуществить
@@ -37,17 +38,6 @@
 			{% endif %}
 		</div>
 	</div>
-	<script>
-		$("#button_choose").click(function(e) {
-			current = $("#id_select option:selected").val();
-				$.ajax({
-					type: "POST",
-					url:"/administrator/",
-					data:{csrfmiddlewaretoken:$("input[name=csrfmiddlewaretoken]").val(), current:current}
-				});
-			});
-		
-	</script>
 
 	{% if current == "0" %}
 	<div style="font-size: 2.8vw; color:red;cursor: default;" align="center">Не выбрано действие!</div>
@@ -66,8 +56,6 @@
 	{% elif current == "5" %}
 	Просмотр статистики
 	{% endif %}
-
-	{{current}} {{current_}}
 
 
 {% endblock %}
