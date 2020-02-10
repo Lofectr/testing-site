@@ -1,0 +1,53 @@
+* {
+    color: white;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    outline: none;
+}
+html
+{
+    background: rgb(41, 41, 41);
+}
+
+/* Header */
+header
+{
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    background: rgb(82, 82, 82);
+}
+.el-header
+{
+    flex:1;
+    text-align: center;
+    font-size: 1.4vw;
+}
+.el-header>a:hover
+{
+    color: rgb(151, 151, 151);
+}
+
+/* Footer */
+footer
+{
+    background: rgb(82, 82, 82);
+    height: 80px;
+    padding: 0.3vw;
+}
+
+
+/* content */
+#content
+{
+    background: rgb(59, 59, 59);
+    min-height: calc(80vh - 80px);
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    border: 1px solid black;
+    border-radius: 1%;
+    padding: 1vw;
+}

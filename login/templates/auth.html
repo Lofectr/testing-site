@@ -1,0 +1,16 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'auth.css' %}">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div id="titleAuth">
+            Авторизация
+        </div><br>
+        <label for="id_email">Почта(Логин): </label>
+        <input type="email" name="email" id="id_email" maxlength="100"><br><br>
+        <label for="id_password">Пароль: </label>
+        <input type="password" name="password" id="id_password"><br><br>
+        <input type="submit" value="Войти" id="authButton" name="authButton">
+    </form>
+{% endblock %}

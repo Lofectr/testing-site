@@ -1,0 +1,17 @@
+#titleAdministrator
+{
+	font-size: 2.6vw;
+	color:#BDBDBD;
+	cursor: default;
+}
+
+select, option, input
+{
+	color:black;
+}
+
+#navigration
+{
+	font-size: 2.6vw;
+	cursor: default;
+}

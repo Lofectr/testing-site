@@ -1,0 +1,53 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'administrator.css' %}">
+
+	<div id="titleAdministrator" align="center">Админ панель</div><hr color="#666666" style="margin-bottom: 20px;">
+	<div id="selectActionForm" align="right">
+		<div id="navigration" align="right">Навигация</div>
+		<form action="" method="post">
+			{% csrf_token %}
+			<select name="select" id="id_select" style="cursor: pointer;">
+	  			<option value="0" selected="selected" hidden="hidden">Выбирите действие</option>
+			  	<option value="1">Добавить куратора</option>
+			  	<option value="2">Добавить школу</option>
+			  	<option value="3">Открыть сезон тестирования</option>
+			  	<option value="4">Добавить тест</option>
+			 	<option value="5">Посмотреть статистику</option>
+			</select>
+			<input type="submit" value="Выбрать" style="color:black; cursor: pointer;" id="button_choose">
+		</form>
+		<div style="cursor: default;font-size: 0.9vw">
+			{% if current == "0" %}
+			Выберите действие которое хотите осуществить
+			{% elif current == "1" %}
+			Добавление нового куратора
+			{% elif current == "2" %}
+			Добавление новой школы
+			{% elif current == "3" %}
+			Открытие сезона тестирования
+			{% elif current == "4" %}
+			Добавление теста
+			{% elif current == "5" %}
+			Просмотр статистики
+			{% endif %}
+		</div>
+	</div>
+
+	{% if current == "0" %}
+	<div style="font-size: 2.8vw; color:red;cursor: default;" align="center">Не выбрано действие!</div>
+	{% elif current == "1" %}
+	Добавление нового куратора
+	{% elif current == "2" %}
+	Добавление новой школы
+	{% elif current == "3" %}
+	Открытие сезона тестирования
+	{% elif current == "4" %}
+	Добавление теста
+	{% elif current == "5" %}
+	Просмотр статистики
+	{% endif %}
+
+
+{% endblock %}
