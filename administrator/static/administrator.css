@@ -29,3 +29,11 @@ select, option, input
 	width:15vw;
 	font-size: 1vw;
 }
+#content_form>input,label
+{
+	font-size: 1vw;
+}
+#content_form
+{
+	margin-left:7vw;
+}
