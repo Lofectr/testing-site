@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from .forms import Auth
-from .models import User
-from django.contrib.auth import authenticate, login
+from .models import *
+from index.global_context import *
 
 def auth(request):
     if request.POST:
         formAuth = Auth(request.POST)
         if formAuth.is_valid():
-            if User.objects.filter(email=request.POST['email'], password=request.POST['password']):
+            if isReg(request.POST['email'],request.POST['password']):
                 request.session['email'] = request.POST['email']
                 request.session['password'] = request.POST['password']
                 return redirect('/')
