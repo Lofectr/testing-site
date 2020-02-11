@@ -8,45 +8,31 @@
 
 	<!--Навигация-->
 	<div id="selectActionForm" align="right">
-		<div id="navigration" align="right">Навигация</div>
+		<div id="navigration" align="right" style="margin-right: 1.5vw">Навигация</div>
 
 		<form action="" method="post">
 			{% csrf_token %}
-			<select name="select" id="id_select" style="cursor: pointer;">
+			<select name="select" id="id_select">
 	  			<option value="0" selected="selected" hidden="hidden">Выбирите действие</option>
 			  	<option value="1">Добавить куратора</option>
 			  	<option value="2">Добавить школу</option>
 			  	<option value="3">Открыть сезон тестирования</option>
 			  	<option value="4">Добавить тест</option>
 			 	<option value="5">Посмотреть статистику</option>
-			</select>
-			<input type="submit" value="Выбрать" style="color:black; cursor: pointer;" id="id_button_choose" name="button_choose">
+			</select><br><br>
+			<input type="submit" value="Выбрать" id="id_button_choose" name="button_choose">
 		</form>
 		<script>
 			$("#id_select").val({{current}});
 		</script>
-		<div style="cursor: default;font-size: 0.9vw">
-			{% if current == "0" %}
-			Выберите действие которое хотите осуществить
-			{% elif current == "1" %}
-			Добавление нового куратора
-			{% elif current == "2" %}
-			Добавление новой школы
-			{% elif current == "3" %}
-			Открытие сезона тестирования
-			{% elif current == "4" %}
-			Добавление теста
-			{% elif current == "5" %}
-			Просмотр статистики
-			{% endif %}
-		</div>
 	</div>
 
-	<!--Контент. МНЕ НУЖНА ВОТ ЭТУ ФОРМУ НА ДРУГОЙ СТРАНИЦЕ ОБРАБОТАТЬ-->
+	<!--Контент-->
 	{% if current == "0" %}
 	<div style="font-size: 2.8vw; color:red;cursor: default;" align="center">Не выбрано действие!</div>
 	{% elif current == "1" %}
-	<form action="add_curator/" method="post">
+
+	<form action="" method="post">
 		{% csrf_token %}
 		<div style="font-size: 2.5em; color:#A5A5A5">Добавление куратора</div><br>
 		<label for="id_name">Имя: </label>
@@ -57,8 +43,17 @@
 		<input type="text" id="id_email" name="email" maxlength="100"><br><br>
 		<input type="submit" value="Зарегистрировать" name="addCuratorButton">
 	</form>
+
 	{% elif current == "2" %}
-	Добавление новой школы
+
+	<form action="" method="post">
+		{% csrf_token %}
+		<div style="font-size: 2.5em; color:#A5A5A5">Добавление школы</div><br>
+		<label for="id_number">Номер школы: </label>
+		<input type="text" id="id_number" name="number" maxlength="30"><br><br>
+		<input type="submit" value="Добавить" name="addSchoolButton">
+	</form>
+
 	{% elif current == "3" %}
 	Открытие сезона тестирования
 	{% elif current == "4" %}
