@@ -139,6 +139,11 @@ def administrator(request):
 					test = Test(title=title, description=description)
 					test.save()
 					current = '6' #добавление/изменение вопросов
+					context['listTestForUpdate'] = {}
+					for test_ in Test.objects.all():
+						context['listTestForUpdate'][test_.id] = test_.title
+					context['currentTest'] = test.id
+					context['isSelectedTest'] = True
 
 			elif 'addUpdateTestButton' in request.POST:
 				current = '6'
@@ -151,11 +156,14 @@ def administrator(request):
 					isError = True
 					error['listTest'] = 'Выберите тест!'
 				else:
-					test = Test.objects.get(id=currentTest)
+					try:
+						test = Test.objects.get(id=currentTest)
+					except:
+						return redirect('/administrator/')
 				#заново показываем список
 				context['listTestForUpdate'] = {}
-				for test in Test.objects.all():
-					context['listTestForUpdate'][test.id] = test.title
+				for test_ in Test.objects.all():
+					context['listTestForUpdate'][test_.id] = test_.title
 
 				#можем добавлять вопросы
 				if not isError:
@@ -182,7 +190,6 @@ def administrator(request):
 					context['listTestForUpdate'][test.id] = test.title
 				idTest = request.POST['currentTest']
 				context['currentTest'] = idTest
-
 				question = request.POST['question']
 				answer = request.POST['answer']
 				test = Test.objects.get(id=idTest)

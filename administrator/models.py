@@ -19,4 +19,4 @@ class Question(models.Model):
 	answer = models.CharField('Ответ', max_length=200)
 
 	def __str__(self):
-		return self.number
+		return self.question
