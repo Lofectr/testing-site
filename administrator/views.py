@@ -19,6 +19,7 @@ def administrator(request):
 		if request.POST:
 			#форма навигации
 			if 'button_choose' in request.POST:
+
 				current = request.POST.get('select')
 				if current == '2':
 					context['listCuratorsForDelete'] = {}
@@ -32,6 +33,10 @@ def administrator(request):
 					context['listTestForUpdate'] = {}
 					for test in Test.objects.all():
 						context['listTestForUpdate'][test.id] = test.title
+				if current == '7':
+					context['listTestForDel'] = {}
+					for test in Test.objects.all():
+						context['listTestForDel'][test.id] = test.title
 			#Добавить куратора
 			elif 'addCuratorButton' in request.POST:
 				current = '1'
@@ -200,6 +205,36 @@ def administrator(request):
 
 				context['listQuestion'] = test.question_set.all()
 				context['isSelectedTest'] = True
+
+			elif 'delQuestionButton' in request.POST:
+				current = '6'
+				context['listTestForUpdate'] = {}
+				for test in Test.objects.all():
+					context['listTestForUpdate'][test.id] = test.title
+				idTest = request.POST['currentTest']
+				context['currentTest'] = idTest
+				test = Test.objects.get(id=idTest)
+				test.question_set.get(id=request.POST['currentQuestion']).delete()
+
+				context['listQuestion'] = test.question_set.all()
+				context['isSelectedTest'] = True
+
+			#удалить тест
+			elif 'delTestButton' in request.POST:
+				current = '7'
+				currentTest = request.POST['listTestDel']
+				if currentTest == "default":
+					error['delTest'] = 'Выберите тест'
+				else:
+					try:
+						Test.objects.get(id=currentTest).delete()
+					except:
+						warning['all'] = 'Не надо подтверждать повторную отправку!'
+
+				#заново показываем список
+				context['listTestForDel'] = {}
+				for test in Test.objects.all():
+					context['listTestForDel'][test.id] = test.title
 
 
 		context['current'] = current

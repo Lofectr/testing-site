@@ -65,8 +65,9 @@
 				{% for key,cur in listCuratorsForDelete.items %}
 					<option value="{{key}}">{{cur}}</option>
 				{% endfor %}
-			</select><span class="error">{{error.listCurator}}</span> <span class="warning">{{warning.all}}</span><br><br>
-			<input type="submit" value="Удалить" name="delCuratorButton" style="margin-left: 3vw">
+			</select> <input type="submit" value="Удалить" name="delCuratorButton">
+			<span class="error">{{error.listCurator}}</span> <span class="warning">{{warning.all}}</span><br><br>
+			
 			<div class="info">ПРЕДУПРЕЖДЕНИЕ: кого удалил вернуть можно только заново зарегистрировав</div>
 		</form>
 
@@ -94,8 +95,9 @@
 				{% for key,school in listSchoolForDelete.items %}
 					<option value="{{key}}">{{school}}</option>
 				{% endfor %}
-			</select><span class="error">{{error.listSchool}}</span> <span class="warning">{{warning.all}}</span><br><br>
-			<input type="submit" value="Удалить" name="delSchoolButton">
+			</select> <input type="submit" value="Удалить" name="delSchoolButton">
+			<span class="error">{{error.listSchool}}</span> <span class="warning">{{warning.all}}</span>
+			
 		</form>
 	
 	{% elif current == "5" %}
@@ -150,6 +152,7 @@
 					<input type="hidden" name="currentTest" value="{{currentTest}}">
 					<input type="hidden" name="currentQuestion" value="{{quest.id}}">
 					<input type="submit" value="Изменить" name="updateQuestionButton">
+					<input type="submit" value="Удалить" name="delQuestionButton">
 				</form>
 			{% endfor %}
 			<br>
@@ -159,6 +162,21 @@
 				<input type="submit" value="Добавить вопрос" name="addQuestionButton">
 			</form>
 		{% endif %}
+
+	{% elif current == "7" %}
+	<!--Удалить тест-->
+		<form action="" method="post" class="content_form">
+			{% csrf_token %}
+			<div style="font-size: 2.3vw; color:#A5A5A5">Удаление теста</div><br>
+			<label for="id_listTestDel">Выберите тест для удаления: </label><br>
+			<select name="listTestDel" id="id_listTestDel">
+				<option value="default" selected="selected" hidden="hidden">Выбирете из списка</option>
+				{% for key,test in listTestForDel.items %}
+					<option value="{{key}}">{{test}}</option>
+				{% endfor %}
+			</select>
+			<input type="submit" value="Удалить" name="delTestButton"><span class="error">{{error.delTest}}</span>
+		</form>
 
 	{% endif %}
 
