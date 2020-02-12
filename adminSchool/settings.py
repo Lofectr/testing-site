@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'index',
     'login',
     'administrator',
+    'regTeacher',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

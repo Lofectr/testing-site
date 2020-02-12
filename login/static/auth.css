@@ -7,9 +7,19 @@
 input
 {
     color: black;
+    font-size: 1vw;
+}
+label
+{
+	font-size: 1vw;
 }
 
 #authButton
 {
     font-size: 1.3em;
+}
+
+#forTeacher>a
+{
+	color:#9595EE;
 }

@@ -22,8 +22,7 @@
 			  	<option value="6">Добавить/изменить вопросы</option>
 			  	<option value="7">Удалить тест</option>
 			  	<option value="8">Открыть сезон тестирования</option>
-			  	<option value="9">Закрыть сезон тестирования</option>
-			 	<option value="10">Посмотреть статистику</option>
+			 	<option value="9">Посмотреть статистику</option>
 			</select><br><br>
 			<input type="submit" value="Выбрать" id="id_button_choose" name="button_choose">
 		</form>
@@ -40,7 +39,7 @@
 		<!--Добавление куратора-->
 		<form action="" method="post" class="content_form">
 			{% csrf_token %}
-			<div style="font-size: 2.3vw; color:#A5A5A5;">Добавление куратора</div><br>
+			<div class="subtitle">Добавление куратора</div><br>
 			<label for="id_name">Имя: </label>
 			<input type="text" id="id_name" name="name" maxlength="30"><span class="error">{{error.name}}</span><br><br>
 			<label for="id_surname">Фамилия: </label>
@@ -57,7 +56,7 @@
 
 		<form action="" method="post" class="content_form">
 			{% csrf_token %}
-			<div style="font-size: 2.3vw; color:#A5A5A5">Удалить куратора</div><br>
+			<div class="subtitle">Удалить куратора</div><br>
 			<label for="id_number">Выберите куратора для удаления: </label><br>
 			<select name="listCuartorsDel" id="id_listCuartorsDel">
 				<option value="default" selected="selected" hidden="hidden">Выбирете из списка</option>
@@ -77,7 +76,7 @@
 
 		<form action="" method="post" class="content_form">
 			{% csrf_token %}
-			<div style="font-size: 2.3vw; color:#A5A5A5">Добавление школы</div><br>
+			<div class="subtitle">Добавление школы</div><br>
 			<label for="id_number">Номер школы: </label>
 			<input type="text" id="id_number" name="number" maxlength="30" placeholder="Например: МБОУ №34"><span class="error">{{error.number}}</span><br><br>
 			<input type="submit" value="Добавить" name="addSchoolButton">
@@ -88,7 +87,7 @@
 		<!--Удаление школы-->
 		<form action="" method="post" class="content_form">
 			{% csrf_token %}
-			<div style="font-size: 2.3vw; color:#A5A5A5">Удалить школы</div><br>
+			<div class="subtitle">Удалить школы</div><br>
 			<label for="id_listSchoolDel">Выберите школу для удаления: </label><br>
 			<select name="listSchoolDel" id="id_listSchoolDel">
 				<option value="default" selected="selected" hidden="hidden">Выбирете из списка</option>
@@ -105,7 +104,7 @@
 		<!--Добавление теста-->
 		<form action="" method="post" class="content_form">
 			{% csrf_token %}
-			<div style="font-size: 2.3vw; color:#A5A5A5">Добавление теста</div><br>
+			<div class="subtitle">Добавление теста</div><br>
 
 			<label for="id_title">Название теста: </label>
 			<input type="text" name="title" id="id_title" maxlength="100" placeholder="около 30 символов"><span class="error">{{error.title}}</span><br><br>
@@ -127,7 +126,7 @@
 		<!--добавление/изменение вопросов-->
 		<form action="" method="post" class="content_form">
 			{% csrf_token %}
-			<div style="font-size: 2.3vw; color:#A5A5A5">Добавление/изменение вопросов</div><br>
+			<div class="subtitle">Добавление/изменение вопросов</div><br>
 			<label for="id_listTestUpdate">Выберите тест для редактирования: </label><br>
 			<select name="listTestUpdate" id="id_listTestUpdate">
 				<option value="default" selected="selected" hidden="hidden">Выбирете из списка</option>
@@ -167,7 +166,7 @@
 	<!--Удалить тест-->
 		<form action="" method="post" class="content_form">
 			{% csrf_token %}
-			<div style="font-size: 2.3vw; color:#A5A5A5">Удаление теста</div><br>
+			<div class="subtitle">Удаление теста</div><br>
 			<label for="id_listTestDel">Выберите тест для удаления: </label><br>
 			<select name="listTestDel" id="id_listTestDel">
 				<option value="default" selected="selected" hidden="hidden">Выбирете из списка</option>
@@ -178,6 +177,28 @@
 			<input type="submit" value="Удалить" name="delTestButton"><span class="error">{{error.delTest}}</span>
 		</form>
 
+	{% elif current == "8" %}
+		<!--Открытие сезона тестирования-->
+		<!--TODO: должен открыватся выбранный тест, и завершатся в выбраную дату-->
+		<form action="" method="post" class="content_form">
+			{% csrf_token %}
+			<div class="subtitle">Открытие сезона тестирования</div><br>
+			<label for="id_listTestOpen">Выберите тест для открытия: </label><br>
+			<select name="listTestOpen" id="id_listTestOpen">
+				<option value="default" selected="selected" hidden="hidden">Выбирете из списка</option>
+				{% for key,test in listTestOpen.items %}
+					<option value="{{key}}">{{test}}</option>
+				{% endfor %}
+			</select> <span class="error">{{error.Test}}</span><br><br>
+			<label for="id_dateEnd">Дата закрытия: </label><br>
+			<input type="date" name="dateEnd" id="id_dateEnd"><br><br>
+			<input type="submit" value="Открыть" name="OpenTestButton"><br><br>
+			<span class="info">ПРЕДУПРЕЖДЕНИЕ: тест закроется только в выбраную вами дату!</span>
+		</form>
+
+	{% elif current == "9" %}
+		<!--Просмотр статистики-->
+		<div class="content_form subtitle">Статистика</div>
 	{% endif %}
 
 

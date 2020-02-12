@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from .models import *
 from index.global_context import *
 
@@ -11,3 +10,11 @@ def auth(request):
             return redirect('/')
         return redirect('/auth/')
     return render(request, 'auth.html')
+
+def exit(request):
+	try:
+		del request.session['email']
+		del request.session['password']
+		return redirect('/') 
+	except:
+		return redirect('/')

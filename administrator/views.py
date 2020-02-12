@@ -236,6 +236,12 @@ def administrator(request):
 				for test in Test.objects.all():
 					context['listTestForDel'][test.id] = test.title
 
+			elif 'OpenTestButton' in request.POST:
+				current = '8'
+
+			elif '' in request.POST:
+				current = '9'
+
 
 		context['current'] = current
 		context['error'] = error

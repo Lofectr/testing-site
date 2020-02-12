@@ -13,9 +13,12 @@
         <div class="el-header" id="main"><a href="/">Главная</a></div>
 
         {% if auth == False %}
-            <div class="el-header" id="regAuth"><a href="/auth/">Авторизация</a></div>
+            <div class="el-header"><a href="/auth/">Авторизация</a></div>
         {% elif auth == True and role == "Admin" %}
-            <div class="el-header" id="regAuth"><a href="/administrator/">Админ панель</a></div>        
+            <div class="el-header"><a href="/administrator/">Админ панель</a></div>  
+        {% endif %}
+        {% if auth == True %}
+        <div class="el-header"><a href="/auth/exit/">Выйти</a></div>
         {% endif %}
     </header>
 
