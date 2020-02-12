@@ -19,10 +19,11 @@
 			  	<option value="3">Добавить школу</option>
 			  	<option value="4">Удалить школу</option>
 			  	<option value="5">Добавить тест</option>
-			  	<option value="6">Удалить тест</option>
-			  	<option value="7">Открыть сезон тестирования</option>
-			  	<option value="8">Закрыть сезон тестирования</option>
-			 	<option value="9">Посмотреть статистику</option>
+			  	<option value="6">Добавить/изменить вопросы теста</option>
+			  	<option value="7">Удалить тест</option>
+			  	<option value="8">Открыть сезон тестирования</option>
+			  	<option value="9">Закрыть сезон тестирования</option>
+			 	<option value="10">Посмотреть статистику</option>
 			</select><br><br>
 			<input type="submit" value="Выбрать" id="id_button_choose" name="button_choose">
 		</form>
@@ -103,7 +104,14 @@
 			<div style="font-size: 2.3vw; color:#A5A5A5">Добавление теста</div><br>
 
 			<label for="id_title">Название теста: </label>
-			<input type="text" name="title" id="id_title" maxlength="100"><span class="error">{{error.title}}</span><br><br>
+			<input type="text" name="title" id="id_title" maxlength="100" placeholder="около 30 символов"><span class="error">{{error.title}}</span><br><br>
+
+			<label for="id_selectClassTest">Выберите тип теста:</label>
+			<select name="selectClassTest" id="id_selectClassTest">
+				<option value="default" selected="selected" hidden="hidden">Выберите тип</option>
+				<option value="junior">Младшие классы</option>
+				<option value="senior">Старшие классы</option>
+			</select><span class="error">{{error.type_test}}</span><br><br>
 
 			<label for="id_description">Описание теста: </label>
 			<textarea id="id_description" name="description" id="" cols="25" rows="4" style="resize: none" placeholder="необязательно"></textarea><br><br>

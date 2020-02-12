@@ -117,7 +117,23 @@ def administrator(request):
 
 
 			#Добавление тестов
+			elif 'addTestButton' in request.POST:
+				isError = False
+				current = '5'
+				title = request.POST['title']
+				description = request.POST['description']
+				type_test = request.POST['selectClassTest']
 
+				if len(title) < 3:
+					isError = True
+					error['title'] = 'Название слишком короткое!'
+				if type_test == 'default':
+					isError = True
+					error['type_test'] = 'Выберите тип теста!'
+
+				if not isError:
+					test = Test(title=title, description=description)
+					test.save()
 
 		context['current'] = current
 		context['error'] = error
