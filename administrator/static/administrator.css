@@ -5,7 +5,7 @@
 	cursor: default;
 }
 
-select, option, input
+select, option, input, textarea
 {
 	color:black;
 }
@@ -29,11 +29,34 @@ select, option, input
 	width:15vw;
 	font-size: 1vw;
 }
-#content_form>input,label
+#content_form>input,label, select, textarea
 {
 	font-size: 1vw;
 }
 #content_form
 {
 	margin-left:7vw;
+}
+.error
+{
+	color:red;
+	font-size: 1.1vw;
+	margin-left: 3vw;
+}
+.warning
+{
+	color: #C7CD22;
+	font-size: 1.1vw;
+	margin-left: 3vw;
+}
+.info
+{
+	font-size: 1vw;
+	color:#77D4FF;
+	margin-top: 5vw;
+}
+
+input[type="submit"]
+{
+	cursor: pointer;
 }

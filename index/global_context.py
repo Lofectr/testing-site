@@ -1,5 +1,8 @@
 import datetime
 import login
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+
 def globalContext(request):
 	email = request.session.get('email', None)
 	password = request.session.get('password', None)
@@ -29,10 +32,31 @@ def isReg(email, password):
 		try:
 			user = login.models.Curator.objects.get(email=email, password=password)
 			return user
-				
 		except:
 			try:
 				user = login.models.Teacher.objects.get(email=email, password=password)
 				return user
 			except:
 				return False
+
+def isHaveEmailDB(email):
+	try:
+		user = login.models.Admin.objects.get(email=email)
+		return True
+	except:
+		try:
+			user = login.models.Curator.objects.get(email=email)
+			return True
+		except:
+			try:
+				user = login.models.Teacher.objects.get(email=email)
+				return True
+			except:
+				return False #Значит почта свободна
+
+def isThisMail(email):    
+    try:
+        validate_email(email)
+        return True
+    except ValidationError:
+        return False

@@ -15,10 +15,14 @@
 			<select name="select" id="id_select">
 	  			<option value="0" selected="selected" hidden="hidden">Выбирите действие</option>
 			  	<option value="1">Добавить куратора</option>
-			  	<option value="2">Добавить школу</option>
-			  	<option value="3">Открыть сезон тестирования</option>
-			  	<option value="4">Добавить тест</option>
-			 	<option value="5">Посмотреть статистику</option>
+			  	<option value="2">Удалить куратора</option>
+			  	<option value="3">Добавить школу</option>
+			  	<option value="4">Удалить школу</option>
+			  	<option value="5">Добавить тест</option>
+			  	<option value="6">Удалить тест</option>
+			  	<option value="7">Открыть сезон тестирования</option>
+			  	<option value="8">Закрыть сезон тестирования</option>
+			 	<option value="9">Посмотреть статистику</option>
 			</select><br><br>
 			<input type="submit" value="Выбрать" id="id_button_choose" name="button_choose">
 		</form>
@@ -29,37 +33,84 @@
 
 	<!--Контент-->
 	{% if current == "0" %}
-	<div style="font-size: 2.8vw; color:red;cursor: default;" align="center">Не выбрано действие!</div>
+		<div style="font-size: 2.8vw; color:red;cursor: default;" align="center">Не выбрано действие!</div>
 	{% elif current == "1" %}
+		
+		<!--Добавление куратора-->
+		<form action="" method="post" id="content_form">
+			{% csrf_token %}
+			<div style="font-size: 2.3vw; color:#A5A5A5;">Добавление куратора</div><br>
+			<label for="id_name">Имя: </label>
+			<input type="text" id="id_name" name="name" maxlength="30"><span class="error">{{error.name}}</span><br><br>
+			<label for="id_surname">Фамилия: </label>
+			<input type="text" id="id_surname" name="surname" maxlength="50"><span class="error">{{error.surname}}</span><br><br>
+			<label for="id_email">Почта: </label>
+			<input type="email" id="id_email" name="email" maxlength="100"><span class="error">{{error.email}}</span><br><br>
+			<input type="submit" value="Зарегистрировать" name="addCuratorButton">
+		</form>
 
-	<form action="" method="post" id="content_form">
-		{% csrf_token %}
-		<div style="font-size: 2.3vw; color:#A5A5A5;">Добавление куратора</div><br>
-		<label for="id_name">Имя: </label>
-		<input type="text" id="id_name" name="name" maxlength="30"><br><br>
-		<label for="id_surname">Фамилия: </label>
-		<input type="text" id="id_surname" name="surname" maxlength="50"><br><br>
-		<label for="id_email">Почта: </label>
-		<input type="text" id="id_email" name="email" maxlength="100"><br><br>
-		<input type="submit" value="Зарегистрировать" name="addCuratorButton">
-	</form>
 
 	{% elif current == "2" %}
 
-	<form action="" method="post" id="content_form">
-		{% csrf_token %}
-		<div style="font-size: 2.3vw; color:#A5A5A5">Добавление школы</div><br>
-		<label for="id_number">Номер школы: </label>
-		<input type="text" id="id_number" name="number" maxlength="30"><br><br>
-		<input type="submit" value="Добавить" name="addSchoolButton">
-	</form>
+		<!--Удаление куратора-->
+
+		<form action="" method="post" id="content_form">
+			{% csrf_token %}
+			<div style="font-size: 2.3vw; color:#A5A5A5">Удалить куратора</div><br>
+			<label for="id_number">Выберите куратора для удаления: </label><br>
+			<select name="listCuartorsDel" id="id_listCuartorsDel">
+				<option value="default" selected="selected" hidden="hidden">Выбирете из списка</option>
+				<option value="all">Удалить всех</option>
+				{% for key,cur in listCuratorsForDelete.items %}
+					<option value="{{key}}">{{cur}}</option>
+				{% endfor %}
+			</select><span class="error">{{error.listCurator}}</span> <span class="warning">{{warning.all}}</span><br><br>
+			<input type="submit" value="Удалить" name="delCuratorButton" style="margin-left: 3vw">
+			<div class="info">ПРЕДУПРЕЖДЕНИЕ: кого удалил вернуть можно только заново зарегистрировав</div>
+		</form>
 
 	{% elif current == "3" %}
-	Открытие сезона тестирования
+
+		<!--Добавление школы-->
+
+		<form action="" method="post" id="content_form">
+			{% csrf_token %}
+			<div style="font-size: 2.3vw; color:#A5A5A5">Добавление школы</div><br>
+			<label for="id_number">Номер школы: </label>
+			<input type="text" id="id_number" name="number" maxlength="30" placeholder="Например: МБОУ №34"><span class="error">{{error.number}}</span><br><br>
+			<input type="submit" value="Добавить" name="addSchoolButton">
+		</form>
+
 	{% elif current == "4" %}
-	Добавление теста
+
+		<!--Удаление школы-->
+		<form action="" method="post" id="content_form">
+			{% csrf_token %}
+			<div style="font-size: 2.3vw; color:#A5A5A5">Удалить школы</div><br>
+			<label for="id_listSchoolDel">Выберите школу для удаления: </label><br>
+			<select name="listSchoolDel" id="id_listSchoolDel">
+				<option value="default" selected="selected" hidden="hidden">Выбирете из списка</option>
+				{% for key,school in listSchoolForDelete.items %}
+					<option value="{{key}}">{{school}}</option>
+				{% endfor %}
+			</select><span class="error">{{error.listSchool}}</span> <span class="warning">{{warning.all}}</span><br><br>
+			<input type="submit" value="Удалить" name="delSchoolButton">
+		</form>
+	
 	{% elif current == "5" %}
-	Просмотр статистики
+		<form action="" method="post" id="content_form">
+			{% csrf_token %}
+			<div style="font-size: 2.3vw; color:#A5A5A5">Добавление теста</div><br>
+
+			<label for="id_title">Название теста: </label>
+			<input type="text" name="title" id="id_title" maxlength="100"><span class="error">{{error.title}}</span><br><br>
+
+			<label for="id_description">Описание теста: </label>
+			<textarea id="id_description" name="description" id="" cols="25" rows="4" style="resize: none" placeholder="необязательно"></textarea><br><br>
+
+			<input type="submit" value="Создать" name="addTestButton">
+
+		</form>
 	{% endif %}
 
 
