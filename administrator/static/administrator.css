@@ -29,11 +29,11 @@ select, option, input, textarea
 	width:15vw;
 	font-size: 1vw;
 }
-#content_form>input,label, select, textarea
+.content_form>input,label, select, textarea
 {
 	font-size: 1vw;
 }
-#content_form
+.content_form
 {
 	margin-left:7vw;
 }
@@ -59,4 +59,8 @@ select, option, input, textarea
 input[type="submit"]
 {
 	cursor: pointer;
+}
+.numberQuestion
+{
+	font-size: 1.2vw;
 }

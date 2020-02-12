@@ -5,10 +5,9 @@ from index.global_context import *
 
 def auth(request):
     if request.POST:
-        if formAuth.is_valid():
-            if isReg(request.POST['email'],request.POST['password']):
-                request.session['email'] = request.POST['email']
-                request.session['password'] = request.POST['password']
-                return redirect('/')
-            return redirect('/auth/')
+        if isReg(request.POST['email'],request.POST['password']):
+            request.session['email'] = request.POST['email']
+            request.session['password'] = request.POST['password']
+            return redirect('/')
+        return redirect('/auth/')
     return render(request, 'auth.html')

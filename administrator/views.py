@@ -28,6 +28,10 @@ def administrator(request):
 					context['listSchoolForDelete'] = {}
 					for school in School.objects.all():
 						context['listSchoolForDelete'][school.id] = school.number
+				if current == '6':
+					context['listTestForUpdate'] = {}
+					for test in Test.objects.all():
+						context['listTestForUpdate'][test.id] = test.title
 			#Добавить куратора
 			elif 'addCuratorButton' in request.POST:
 				current = '1'
@@ -134,6 +138,62 @@ def administrator(request):
 				if not isError:
 					test = Test(title=title, description=description)
 					test.save()
+					current = '6' #добавление/изменение вопросов
+
+			elif 'addUpdateTestButton' in request.POST:
+				current = '6'
+				isError = False
+
+				currentTest = request.POST['listTestUpdate']
+				context['currentTest'] = currentTest
+
+				if currentTest == "default":
+					isError = True
+					error['listTest'] = 'Выберите тест!'
+				else:
+					test = Test.objects.get(id=currentTest)
+				#заново показываем список
+				context['listTestForUpdate'] = {}
+				for test in Test.objects.all():
+					context['listTestForUpdate'][test.id] = test.title
+
+				#можем добавлять вопросы
+				if not isError:
+					context['isSelectedTest'] = True
+					context['listQuestion'] = test.question_set.all()
+
+			elif 'addQuestionButton' in request.POST:
+				current = '6'
+				context['listTestForUpdate'] = {}
+				for test in Test.objects.all():
+					context['listTestForUpdate'][test.id] = test.title
+
+				idTest = request.POST['currentTest']
+				context['currentTest'] = idTest
+				test = Test.objects.get(id=idTest)
+				test.question_set.create(question='', answer='')
+				context['listQuestion'] = test.question_set.all()
+				context['isSelectedTest'] = True
+
+			elif 'updateQuestionButton' in request.POST:
+				current = '6'
+				context['listTestForUpdate'] = {}
+				for test in Test.objects.all():
+					context['listTestForUpdate'][test.id] = test.title
+				idTest = request.POST['currentTest']
+				context['currentTest'] = idTest
+
+				question = request.POST['question']
+				answer = request.POST['answer']
+				test = Test.objects.get(id=idTest)
+				quest = test.question_set.get(id=request.POST['currentQuestion'])
+				quest.question = question
+				quest.answer = answer
+				quest.save()
+
+				context['listQuestion'] = test.question_set.all()
+				context['isSelectedTest'] = True
+
 
 		context['current'] = current
 		context['error'] = error

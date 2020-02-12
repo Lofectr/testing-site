@@ -19,7 +19,7 @@
 			  	<option value="3">Добавить школу</option>
 			  	<option value="4">Удалить школу</option>
 			  	<option value="5">Добавить тест</option>
-			  	<option value="6">Добавить/изменить вопросы теста</option>
+			  	<option value="6">Добавить/изменить вопросы</option>
 			  	<option value="7">Удалить тест</option>
 			  	<option value="8">Открыть сезон тестирования</option>
 			  	<option value="9">Закрыть сезон тестирования</option>
@@ -38,7 +38,7 @@
 	{% elif current == "1" %}
 		
 		<!--Добавление куратора-->
-		<form action="" method="post" id="content_form">
+		<form action="" method="post" class="content_form">
 			{% csrf_token %}
 			<div style="font-size: 2.3vw; color:#A5A5A5;">Добавление куратора</div><br>
 			<label for="id_name">Имя: </label>
@@ -55,7 +55,7 @@
 
 		<!--Удаление куратора-->
 
-		<form action="" method="post" id="content_form">
+		<form action="" method="post" class="content_form">
 			{% csrf_token %}
 			<div style="font-size: 2.3vw; color:#A5A5A5">Удалить куратора</div><br>
 			<label for="id_number">Выберите куратора для удаления: </label><br>
@@ -74,7 +74,7 @@
 
 		<!--Добавление школы-->
 
-		<form action="" method="post" id="content_form">
+		<form action="" method="post" class="content_form">
 			{% csrf_token %}
 			<div style="font-size: 2.3vw; color:#A5A5A5">Добавление школы</div><br>
 			<label for="id_number">Номер школы: </label>
@@ -85,7 +85,7 @@
 	{% elif current == "4" %}
 
 		<!--Удаление школы-->
-		<form action="" method="post" id="content_form">
+		<form action="" method="post" class="content_form">
 			{% csrf_token %}
 			<div style="font-size: 2.3vw; color:#A5A5A5">Удалить школы</div><br>
 			<label for="id_listSchoolDel">Выберите школу для удаления: </label><br>
@@ -99,7 +99,9 @@
 		</form>
 	
 	{% elif current == "5" %}
-		<form action="" method="post" id="content_form">
+
+		<!--Добавление теста-->
+		<form action="" method="post" class="content_form">
 			{% csrf_token %}
 			<div style="font-size: 2.3vw; color:#A5A5A5">Добавление теста</div><br>
 
@@ -114,11 +116,50 @@
 			</select><span class="error">{{error.type_test}}</span><br><br>
 
 			<label for="id_description">Описание теста: </label>
-			<textarea id="id_description" name="description" id="" cols="25" rows="4" style="resize: none" placeholder="необязательно"></textarea><br><br>
+			<textarea id="id_description" name="description" cols="25" rows="4" style="resize: none" placeholder="необязательно"></textarea><br><br>
 
 			<input type="submit" value="Создать" name="addTestButton">
-
 		</form>
+
+	{% elif current == "6" %}
+		<!--добавление/изменение вопросов-->
+		<form action="" method="post" class="content_form">
+			{% csrf_token %}
+			<div style="font-size: 2.3vw; color:#A5A5A5">Добавление/изменение вопросов</div><br>
+			<label for="id_listTestUpdate">Выберите тест для редактирования: </label><br>
+			<select name="listTestUpdate" id="id_listTestUpdate">
+				<option value="default" selected="selected" hidden="hidden">Выбирете из списка</option>
+				{% for key,test in listTestForUpdate.items %}
+					<option value="{{key}}">{{test}}</option>
+				{% endfor %}
+			</select>
+			<input type="submit" value="Выбрать" name="addUpdateTestButton"><span class="error">{{error.listTest}}</span>
+		</form><br>
+		<script>
+			$("#id_listTestUpdate").val({{currentTest}});
+		</script>
+
+		{% if isSelectedTest == True %}
+			{% for quest in listQuestion %}
+				<form action="" method="post" class="content_form">
+					{% csrf_token %}
+					<div class="numberQuestion">Вопрос {{forloop.counter}}:</div><br>
+					<textarea name="question" id="id_question" cols="25" rows="6" style="resize: none" placeholder="Вопрос">{{quest.question}}</textarea><br>
+					<label for="id_answer">Ответ: </label>
+					<input type="text" value="{{quest.answer}}" name="answer" id="id_answer" placeholder="Ответ"><br>
+					<input type="hidden" name="currentTest" value="{{currentTest}}">
+					<input type="hidden" name="currentQuestion" value="{{quest.id}}">
+					<input type="submit" value="Изменить" name="updateQuestionButton">
+				</form>
+			{% endfor %}
+			<br>
+			<form action="" method="post" class="content_form">
+				{% csrf_token %}
+				<input type="hidden" name="currentTest" value="{{currentTest}}">
+				<input type="submit" value="Добавить вопрос" name="addQuestionButton">
+			</form>
+		{% endif %}
+
 	{% endif %}
 
 

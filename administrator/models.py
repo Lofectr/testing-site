@@ -17,7 +17,6 @@ class Question(models.Model):
 	test = models.ForeignKey(Test, on_delete=models.CASCADE)
 	question = models.TextField('Вопрос')
 	answer = models.CharField('Ответ', max_length=200)
-	number = models.CharField('Номер вопроса', max_length=3)
 
 	def __str__(self):
 		return self.number
