@@ -19,7 +19,6 @@ def administrator(request):
 		if request.POST:
 			#форма навигации
 			if 'button_choose' in request.POST:
-
 				current = request.POST.get('select')
 				if current == '2':
 					context['listCuratorsForDelete'] = {}
@@ -246,6 +245,7 @@ def administrator(request):
 		context['current'] = current
 		context['error'] = error
 		context['warning'] = warning
+		context['titlePage'] = 'Админ панель'
 		return render(request, 'administrator.html', context)
 	else:
 		return redirect('/')

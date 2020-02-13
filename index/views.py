@@ -5,6 +5,6 @@ import login
 def index(request):
 	user = isReg(request.session.get('email', None), request.session.get('password',None))
 	if user:
-		return render(request, 'index.html')
+		return render(request, 'index.html', {'titlePage':'Главная'})
 	else:
 		return redirect('/auth/')

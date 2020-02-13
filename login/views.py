@@ -9,7 +9,7 @@ def auth(request):
             request.session['password'] = request.POST['password']
             return redirect('/')
         return redirect('/auth/')
-    return render(request, 'auth.html')
+    return render(request, 'auth.html', {'titlePage':'Авторизация'})
 
 def exit(request):
 	try:
