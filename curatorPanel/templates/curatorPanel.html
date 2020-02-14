@@ -1,0 +1,72 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'curator.css' %}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+	<div id="titleAdministrator" align="center">Куратор панель</div><hr color="#666666" style="margin-bottom: 20px;">
+
+	<!--Навигация-->
+	<div id="selectActionForm" align="right">
+		<div id="navigration" align="right" style="margin-right: 1.5vw">Навигация</div>
+
+		<form action="" method="post">
+			{% csrf_token %}
+			<select name="select" id="id_select">
+	  			<option value="0" selected="selected" hidden="hidden">Выбирите действие</option>
+			  	<option value="1">Профили учителей</option>
+			  	<option value="2">Удалить учителя</option>
+			 	<option value="3">Посмотреть статистику</option>
+			</select><br><br>
+			<input type="submit" value="Выбрать" id="id_button_choose" name="button_choose">
+		</form>
+		<script>
+			$("#id_select").val({{current}});
+		</script>
+	</div>
+
+	<!--Контент-->
+	{% if current == "0" %}
+		<div style="font-size: 2.8vw; color:red;cursor: default;" align="center">Не выбрано действие!</div>
+
+	{% elif current == "3" %}
+		<!--Просмотр статистики-->
+		<div class="content_form">
+			<div class="subtitle">Статистика</div>
+		</div>
+	{% elif current == "1" %}
+		<!--Профили учителей-->
+		<div class="content_form">
+			<div class="subtitle">Профили учителей</div><br>
+			<form action="" method="post">
+				{% csrf_token %}
+				<input type="text" name="searchTeacher" placeholder="Введите email учителя">
+				<input type="submit" value="Поиск">
+			</form><br>
+			{% for teacher in Teachers %}
+				<div class="profileCurator">
+					<div>ФИ: <span style="color: #CBCBCB">{{teacher.surname}} {{teacher.name}}</span></div>
+					<div>Почта: <span style="color: #F4FFAC">{{teacher.email}}</span></div>
+					<div>Пароль: <span style="color: #F4FFAC">{{teacher.password}}</span></div>
+				</div><br>
+			{% endfor %}
+		</div>
+	{% elif current == "2" %}
+		<!--Удалить учителя-->
+		<form action="" method="post" class="content_form">
+			{% csrf_token %}
+			<div class="subtitle">Удалить учителя</div><br>
+			<label for="id_number">Выберите учителя для удаления: </label><br>
+			<select name="listTeacherDel" id="id_listTeacherDel">
+				<option value="default" selected="selected" hidden="hidden">Выбирете из списка</option>
+				<option value="all">Удалить всех</option>
+				{% for key,teacher in listTeacherForDelete.items %}
+					<option value="{{key}}">{{teacher}}</option>
+				{% endfor %}
+			</select> <input type="submit" value="Удалить" name="delTeacherButton">
+			<span class="error">{{error.listTeacher}}</span> <span class="warning">{{warning.all}}</span><br><br>
+			
+			<div class="info">ПРЕДУПРЕЖДЕНИЕ: кого удалил вернуть можно только заново зарегистрировав</div>
+		</form>
+	{% endif %}
+{% endblock %}

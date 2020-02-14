@@ -23,3 +23,9 @@ label
 {
 	color:#9595EE;
 }
+.error
+{
+	color:red;
+	font-size: 1.1vw;
+	margin-left: 3vw;
+}

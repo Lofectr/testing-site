@@ -36,6 +36,23 @@ def administrator(request):
 					context['listTestForDel'] = {}
 					for test in Test.objects.all():
 						context['listTestForDel'][test.id] = test.title
+
+				if current == '10':
+					if 'searchCurator' in request.POST:
+						context['Curators'] = login.models.Curator.objects.filter(email__startwith=request.POST['searchCurator'])
+					else:
+						context['Curators'] = login.models.Curator.objects.all()
+
+				if current == '12':
+					context['listTeacherForDelete'] = {}
+					for teacher in login.models.Teacher.objects.all():
+						context['listTeacherForDelete'][teacher.id] = teacher.surname+" "+teacher.name+" | "+teacher.email
+
+				if current == '11':
+					if 'searchTeacher' in request.POST:
+						context['Teachers'] = login.models.Teacher.objects.filter(email__startwith=request.POST['searchTeacher'])
+					else:
+						context['Teachers'] = login.models.Teacher.objects.all()
 			#Добавить куратора
 			elif 'addCuratorButton' in request.POST:
 				current = '1'
@@ -238,10 +255,31 @@ def administrator(request):
 			elif 'OpenTestButton' in request.POST:
 				current = '8'
 
-			elif '' in request.POST:
-				current = '9'
+			elif 'delTeacherButton' in request.POST:
+				current = '12'
+				#удаление
+				currentTeacher = request.POST['listTeacherDel']
+				if currentTeacher == "all":
+					login.models.Teacher.objects.all().delete()
+				elif currentTeacher == "default":
+					error['listTeacher'] = 'Выберите учителя!'
+				else:
+					try:
+						login.models.Teacher.objects.get(id=currentTeacher).delete()
+					except:
+						warning['all'] = 'Не надо подтверждать повторную отправку!'
 
+				#заново показываем список
+				context['listTeacherForDelete'] = {}
+				for teacher in login.models.Teacher.objects.all():
+					context['listTeacherForDelete'][teacher.id] = teacher.surname+" "+teacher.name+" | "+teacher.email
 
+			elif 'searchTeacher' in request.POST:
+				current = '11'
+				context['Teachers'] = login.models.Teacher.objects.filter(email__startswith=request.POST['searchTeacher'])
+			elif 'searchCurator' in request.POST:
+				current = '10'
+				context['Curators'] = login.models.Curator.objects.filter(email__startswith=request.POST['searchCurator'])
 		context['current'] = current
 		context['error'] = error
 		context['warning'] = warning

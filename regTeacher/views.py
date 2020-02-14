@@ -59,4 +59,6 @@ def regTeacher(request):
 
 
 def successReg(request):
-	return render(request, 'successReg.html', {'email':email, 'password': password, 'name': name,'titlePage':'Успешная регистрация!'})
+	if email==None and password==None and name==None:
+		return redirect('/')
+	return render(request, 'successReg.html', {'new_email':email, 'new_password': password, 'new_name': name,'titlePage':'Успешная регистрация!'})

@@ -15,7 +15,10 @@
 			<select name="select" id="id_select">
 	  			<option value="0" selected="selected" hidden="hidden">Выбирите действие</option>
 			  	<option value="1">Добавить куратора</option>
+			  	<option value="10">Профили кураторов</option>
 			  	<option value="2">Удалить куратора</option>
+			  	<option value="11">Профили учителей</option>
+			  	<option value="12">Удалить учителя</option>
 			  	<option value="3">Добавить школу</option>
 			  	<option value="4">Удалить школу</option>
 			  	<option value="5">Добавить тест</option>
@@ -198,7 +201,67 @@
 
 	{% elif current == "9" %}
 		<!--Просмотр статистики-->
-		<div class="content_form subtitle">Статистика</div>
+		<div class="content_form">
+			<div class="subtitle">Статистика</div>
+
+		</div>
+
+	{% elif current == "10" %}
+		<!--Профили кураторов-->
+		<div class="content_form">
+			<div class="subtitle">Профили кураторов</div><br>
+			<form action="" method="post">
+				{% csrf_token %}
+				<input type="text" name="searchCurator" placeholder="Введите email куратора">
+				<input type="submit" value="Поиск">
+			</form><br>
+			{% for cur in Curators %}
+				<div class="profileCurator">
+					<div>ФИ: <span style="color: #CBCBCB">{{cur.surname}} {{cur.name}}</span></div>
+					<div>Почта: <span style="color: #F4FFAC">{{cur.email}}</span></div>
+					<div>Пароль: <span style="color: #F4FFAC">{{cur.password}}</span></div><br>
+					<div>
+						<div style="font-size: 1.4vw">Привязаные учителя: </div>
+						<div>{% for teacher in cur.teacher_set.all %}<div style="color: #F4FFAC">{{teacher.email}}</div>{% endfor %}</div>
+					</div>
+				</div><br>
+			{% endfor %}
+		</div>
+	{% elif current == "11" %}
+		<!--Профили учителей-->
+		<div class="content_form">
+			<div class="subtitle">Профили учителей</div><br>
+			<form action="" method="post">
+				{% csrf_token %}
+				<input type="text" name="searchTeacher" placeholder="Введите email учителя">
+				<input type="submit" value="Поиск">
+			</form><br>
+			{% for teacher in Teachers %}
+				<div class="profileCurator">
+					<div>ФИ: <span style="color: #CBCBCB">{{teacher.surname}} {{teacher.name}}</span></div>
+					<div>Почта: <span style="color: #F4FFAC">{{teacher.email}}</span></div>
+					<div>Пароль: <span style="color: #F4FFAC">{{teacher.password}}</span></div>
+					<div>Куратор: <span style="color: #F4FFAC">{{teacher.curator.email}}</span></div>
+				</div><br>
+			{% endfor %}
+		</div>
+	{% elif current == "12" %}
+		<!--Удалить учителя-->
+		<form action="" method="post" class="content_form">
+			{% csrf_token %}
+			<div class="subtitle">Удалить учителя</div><br>
+			<label for="id_number">Выберите учителя для удаления: </label><br>
+			<select name="listTeacherDel" id="id_listTeacherDel">
+				<option value="default" selected="selected" hidden="hidden">Выбирете из списка</option>
+				<option value="all">Удалить всех</option>
+				{% for key,teacher in listTeacherForDelete.items %}
+					<option value="{{key}}">{{teacher}}</option>
+				{% endfor %}
+			</select> <input type="submit" value="Удалить" name="delTeacherButton">
+			<span class="error">{{error.listTeacher}}</span> <span class="warning">{{warning.all}}</span><br><br>
+			
+			<div class="info">ПРЕДУПРЕЖДЕНИЕ: кого удалил вернуть можно только заново зарегистрировав</div>
+		</form>
 	{% endif %}
 
 

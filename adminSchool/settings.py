@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'login',
     'administrator',
     'regTeacher',
+    'curatorPanel',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -10,7 +10,7 @@
         <label for="id_email">Почта(Логин): </label>
         <input type="email" name="email" id="id_email" maxlength="100"><br><br>
         <label for="id_password">Пароль: </label>
-        <input type="password" name="password" id="id_password"><br><br>
+        <input type="password" name="password" id="id_password"><span class="error">{{error.isReg}}</span><br><br>
         <input type="submit" value="Войти" id="authButton" name="authButton">
     </form>
     <div id="forTeacher" style="margin-left: 5vw;"><a href="/regTeacher/">Для учителей</a></div>

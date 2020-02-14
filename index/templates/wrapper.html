@@ -15,7 +15,9 @@
         {% if auth == False %}
             <div class="el-header"><a href="/auth/">Авторизация</a></div>
         {% elif auth == True and role == "Admin" %}
-            <div class="el-header"><a href="/administrator/">Админ панель</a></div>  
+            <div class="el-header"><a href="/administrator/">Админ панель</a></div>
+        {% elif auth == True and role == "Curator" %}
+            <div class="el-header"><a href="/curator/">Куратор панель</a></div>
         {% endif %}
         {% if auth == True %}
         <div class="el-header"><a href="/auth/exit/">Выйти</a></div>
@@ -27,7 +29,9 @@
     </div>
 
     <footer>
-        Привет, {{name}}
+        {% if auth == True %}
+            Привет, {{name}}
+        {% endif %}
     </footer>
 </body>
 </html>

@@ -4,11 +4,14 @@ from index.global_context import *
 
 def auth(request):
     if request.POST:
+        error = {}
         if isReg(request.POST['email'],request.POST['password']):
             request.session['email'] = request.POST['email']
             request.session['password'] = request.POST['password']
             return redirect('/')
-        return redirect('/auth/')
+        else:
+            error['isReg'] = 'Неверный логин или пароль!'
+            return render(request, 'auth.html', {'titlePage':'Авторизация', 'error':error})
     return render(request, 'auth.html', {'titlePage':'Авторизация'})
 
 def exit(request):
