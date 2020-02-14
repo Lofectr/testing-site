@@ -200,7 +200,7 @@ def administrator(request):
 				idTest = request.POST['currentTest']
 				context['currentTest'] = idTest
 				test = Test.objects.get(id=idTest)
-				test.question_set.create(question='', answer='')
+				test.question_set.create(question='')
 				context['listQuestion'] = test.question_set.all()
 				context['isSelectedTest'] = True
 
@@ -212,11 +212,9 @@ def administrator(request):
 				idTest = request.POST['currentTest']
 				context['currentTest'] = idTest
 				question = request.POST['question']
-				answer = request.POST['answer']
 				test = Test.objects.get(id=idTest)
 				quest = test.question_set.get(id=request.POST['currentQuestion'])
 				quest.question = question
-				quest.answer = answer
 				quest.save()
 
 				context['listQuestion'] = test.question_set.all()

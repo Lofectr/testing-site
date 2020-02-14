@@ -27,7 +27,7 @@ def curator(request):
 
 				if current == '1':
 					if 'searchTeacher' in request.POST:
-						context['Teachers'] = user.teacher_set.filter(email__startwith=request.POST['searchTeacher'])
+						context['Teachers'] = user.teacher_set.filter(email__startswith=request.POST['searchTeacher'])
 					else:
 						context['Teachers'] = user.teacher_set.filter()
 			

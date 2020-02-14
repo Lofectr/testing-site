@@ -149,8 +149,6 @@
 					{% csrf_token %}
 					<div class="numberQuestion">Вопрос {{forloop.counter}}:</div><br>
 					<textarea name="question" id="id_question" cols="25" rows="6" style="resize: none" placeholder="Вопрос">{{quest.question}}</textarea><br>
-					<label for="id_answer">Ответ: </label>
-					<input type="text" value="{{quest.answer}}" name="answer" id="id_answer" placeholder="Ответ"><br>
 					<input type="hidden" name="currentTest" value="{{currentTest}}">
 					<input type="hidden" name="currentQuestion" value="{{quest.id}}">
 					<input type="submit" value="Изменить" name="updateQuestionButton">

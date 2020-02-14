@@ -1,4 +1,5 @@
 from django.db import models
+from administrator.models import *
 
 class Admin(models.Model):
     email = models.EmailField('Почта',max_length=100)
@@ -24,8 +25,8 @@ class Teacher(models.Model):
     password = models.CharField('Пароль',max_length=15)
     name = models.CharField('Имя',max_length=30)
     surname = models.CharField('Фамилия',max_length=50)
-    numberSchool = models.CharField('Номер школы', max_length=50)
-    classSchool = models.CharField('Класс', max_length=2)
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    classSchool = models.ForeignKey(SchoolClass, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.email

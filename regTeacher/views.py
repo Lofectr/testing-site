@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from index.global_context import *
 import login
-from administrator.models import School
+from administrator.models import *
 from random import choice
 from administrator.choice import *
 email = None
@@ -25,11 +25,20 @@ def regTeacher(request):
 		email = request.POST['email']
 		curatorId = request.POST['listCurator']
 		schoolId = request.POST['listSchool']
-		classSchool = request.POST['class']
+		numberClass = request.POST['class']
+		charClass = request.POST['char']
+		lengthClass = request.POST['length']
 		password = ''
 		for i in range(15):
 			password += choice(PASSWORD_GENERATE_SIMBOL)
 
+		try:
+			SchoolClass.objects.get(number=numberClass, char=charClass, length=lengthClass)
+			isError = True
+			error['class'] = 'Этот класс уже существует, вы наверное не учитель, или какой-то плохой человек(не учитель) зарегистрировал этот класс :('
+		except:
+			classSchool = SchoolClass(number=numberClass, char=charClass, length=lengthClass, ref='')
+			classSchool.save()
 		if isHaveEmailDB(email):
 			isError = True
 			error['email'] = 'Данный email уже занят :('
@@ -49,7 +58,7 @@ def regTeacher(request):
 		if not isError:
 			curator = login.models.Curator.objects.get(id=curatorId)
 			school = School.objects.get(id=schoolId)
-			newTeacher = curator.teacher_set.create(email=email, password=password, name=name, surname=surname, numberSchool=school.number, classSchool=classSchool)
+			newTeacher = curator.teacher_set.create(email=email, password=password, name=name, surname=surname, school=school, classSchool=classSchool)
 			context['isReg'] = True
 			context['password'] = password
 			return redirect('success-reg/')
@@ -59,6 +68,4 @@ def regTeacher(request):
 
 
 def successReg(request):
-	if email==None and password==None and name==None:
-		return redirect('/')
 	return render(request, 'successReg.html', {'new_email':email, 'new_password': password, 'new_name': name,'titlePage':'Успешная регистрация!'})

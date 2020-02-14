@@ -20,8 +20,16 @@
 				<option value="{{id}}">{{school}}</option>
 			{% endfor %}
 		</select><span class="error">{{error.schoolList}}</span><br><br>
-		<label for="id_class">Класс: </label>
+
+		<label for="id_class">Номер класса: </label>
 		<input type="number" name="class" id="id_class" min='2' max='11' value='2'><br><br>
+
+		<label for="id_char">Буква класса: </label>
+		<input type="text" id="id_char" name="char" maxlength="1"></span><br><br>
+
+		<label for="id_length">Кол-во учеников: </label>
+		<input type="number" name="length" id="id_length" min='1' max='99' value='1'><br><br>
+
 		<label for="id_listCurator">Куратор: </label>
 		<select name="listCurator" id="id_listSchool">
 			<option value="default" selected="selected" hidden="hidden">Выберите куратора</option>

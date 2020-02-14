@@ -8,4 +8,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('regTeacher/', include('regTeacher.urls')),
     path('curator/', include('curatorPanel.urls')),
+    path('create-ref-for-testing/', include('createRefForTesting.urls'))
 ]

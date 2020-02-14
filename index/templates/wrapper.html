@@ -18,6 +18,8 @@
             <div class="el-header"><a href="/administrator/">Админ панель</a></div>
         {% elif auth == True and role == "Curator" %}
             <div class="el-header"><a href="/curator/">Куратор панель</a></div>
+        {% elif auth == True and role == "Teacher" %}
+            <div class="el-header"><a href="/create-ref-for-testing/">Создать ссылку</a></div>
         {% endif %}
         {% if auth == True %}
         <div class="el-header"><a href="/auth/exit/">Выйти</a></div>
