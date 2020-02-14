@@ -1,0 +1,29 @@
+select, option, input, textarea
+{
+	color:black;
+}
+
+.content_form>input,label, select, textarea
+{
+	font-size: 1vw;
+}
+.content_form
+{
+	margin-left:7vw;
+}
+
+input[type="submit"]
+{
+	cursor: pointer;
+}
+.subtitle
+{
+	font-size: 2.3vw;
+	color:#A5A5A5;
+}
+.error
+{
+	color:red;
+	font-size: 1.1vw;
+	margin-left: 3vw;
+}
