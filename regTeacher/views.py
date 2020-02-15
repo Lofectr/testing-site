@@ -32,13 +32,6 @@ def regTeacher(request):
 		for i in range(15):
 			password += choice(PASSWORD_GENERATE_SIMBOL)
 
-		try:
-			SchoolClass.objects.get(number=numberClass, char=charClass, length=lengthClass)
-			isError = True
-			error['class'] = 'Этот класс уже существует, вы наверное не учитель, или какой-то плохой человек(не учитель) зарегистрировал этот класс :('
-		except:
-			classSchool = SchoolClass(number=numberClass, char=charClass, length=lengthClass, ref='')
-			classSchool.save()
 		if isHaveEmailDB(email):
 			isError = True
 			error['email'] = 'Данный email уже занят :('
@@ -58,10 +51,16 @@ def regTeacher(request):
 		if not isError:
 			curator = login.models.Curator.objects.get(id=curatorId)
 			school = School.objects.get(id=schoolId)
-			newTeacher = curator.teacher_set.create(email=email, password=password, name=name, surname=surname, school=school, classSchool=classSchool)
-			context['isReg'] = True
-			context['password'] = password
-			return redirect('success-reg/')
+			try:
+				schoolclass = SchoolClass.objects.get(number=numberClass, char=charClass, school=school)
+				error['class'] = 'Этот класс уже существует, вы наверное не учитель, или какой-то плохой человек(не учитель) зарегистрировал этот класс :('
+			except:
+				classSchool = SchoolClass(number=numberClass, char=charClass, length=lengthClass, ref='', school=school)
+				classSchool.save()
+				newTeacher = curator.teacher_set.create(email=email, password=password, name=name, surname=surname, classSchool=classSchool)
+				context['isReg'] = True
+				context['password'] = password
+				return redirect('success-reg/')
 	context['error'] = error
 	context['titlePage'] = 'Регистрация учителей'
 	return render(request, 'regTeacher.html', context)
