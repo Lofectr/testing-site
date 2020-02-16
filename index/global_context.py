@@ -74,7 +74,15 @@ def closeTestOrNot():
 			test.save()
 
 def clearTeacherRefIfTestNone():
-	for teacher in login.models.Teacher.objects.filter(test=None):
-		if teacher.classSchool.ref != '':
-			teacher.classSchool.ref = ''
-			teacher.classSchool.save()
+	for teacher in login.models.Teacher.objects.all():
+		if teacher.test == None:
+			if teacher.classSchool.ref != '':
+				teacher.classSchool.ref = ''
+				teacher.classSchool.save()
+		else:
+			if teacher.test.isOpen == False:
+				teacher.test = None
+				teacher.save()
+				if teacher.classSchool.ref != '':
+					teacher.classSchool.ref = ''
+					teacher.classSchool.save()

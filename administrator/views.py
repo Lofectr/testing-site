@@ -258,13 +258,21 @@ def administrator(request):
 			#Открытие теста
 			elif 'OpenTestButton' in request.POST:
 				current = '8'
-				splitDateEnd = request.POST['dateEnd'].split('-')
-				dateEnd = datetime.datetime(year=int(splitDateEnd[0]),month=int(splitDateEnd[1]),day=int(splitDateEnd[2]))
-				testId = request.POST['listTestOpen']
-				test = Test.objects.get(id=testId)
-				test.end = dateEnd
-				test.isOpen = True
-				test.save()
+				isError = False
+				if not request.POST['dateEnd']:
+					isError = True
+					error['date'] = 'Выберите дату закрытия!'
+				if request.POST['listTestOpen'] == 'default':
+					isError = True
+					error['test'] = 'Выберите тест!'
+				if not isError:
+					splitDateEnd = request.POST['dateEnd'].split('-')
+					dateEnd = datetime.datetime(year=int(splitDateEnd[0]),month=int(splitDateEnd[1]),day=int(splitDateEnd[2]))
+					testId = request.POST['listTestOpen']
+					test = Test.objects.get(id=testId)
+					test.end = dateEnd
+					test.isOpen = True
+					test.save()
 
 				context['listTestOpen'] = {}
 				for test in Test.objects.filter(isOpen=False):

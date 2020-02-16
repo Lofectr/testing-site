@@ -1,0 +1,17 @@
+.titleTest
+{
+	font-size: 1.6vw;
+	color:#A9A9A9;
+}
+.questionNumber
+{
+	font-size: 1.2vw;
+	color: #EDEDED;
+}
+.question
+{
+	border: 1px solid #4A4A4A;
+	padding: 1vw;
+	background: #717171;
+	border-radius: 8%;
+}

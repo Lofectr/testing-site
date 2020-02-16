@@ -33,6 +33,8 @@
     <footer>
         {% if auth == True %}
             Привет, {{name}}
+        {% elif isTesting == True %}
+            Удачного теста!
         {% endif %}
     </footer>
 </body>

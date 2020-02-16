@@ -1,4 +1,31 @@
 {% extends 'wrapper.html' %}
 {% block content %}
-	Тестинг
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'administrator.css' %}">
+	<link rel="stylesheet" href="{% static 'testing.css' %}">
+	<div class="content_form">
+		{% if error.isAuth %}
+			<span class="error">{{error.isAuth}}</span>
+		{% elif error.ref %}
+			<span class="error">{{error.ref}}</span>
+		{% elif isSuccess %}
+			<div style="font-size: 2.6vw; color:#38E716">Тест пройден!</div>
+		{% else %}
+			<div class="titleTest">Тест: {{titleTest}}</div><br>
+			{% for question in questions %}
+				<div class="questionNumber">Вопрос №{{forloop.counter}}</div>
+				<div class="question">{{question.question}}</div><br>
+				<form action="" method="post">
+					{% csrf_token %}
+					<label for="id_answer">Ответ: </label><br>
+					<textarea name="answer" id="id_answer" cols="30" rows="4" placeholder="Напишите ответ..." style="resize: none"></textarea>
+					{% if question.id not in questionBan %}
+						<input type="submit" name="answerButton" value="Ответить">
+					{% endif %}
+					<input type="hidden" name="idQuestion" value="{{question.id}}">
+				</form><br><br>
+			{% endfor %}
+		{% endif %}
+	</div>
+
 {% endblock %}

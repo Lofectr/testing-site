@@ -190,9 +190,9 @@
 				{% for key,test in listTestOpen.items %}
 					<option value="{{key}}">{{test}}</option>
 				{% endfor %}
-			</select> <span class="error">{{error.Test}}</span><br><br>
+			</select> <span class="error">{{error.test}}</span><br><br>
 			<label for="id_dateEnd">Дата закрытия: </label><br>
-			<input type="date" name="dateEnd" id="id_dateEnd"><br><br>
+			<input type="date" name="dateEnd" id="id_dateEnd"><span class="error">{{error.date}}</span><br><br>
 			<input type="submit" value="Открыть" name="OpenTestButton"><br><br>
 			<span class="info">ПРЕДУПРЕЖДЕНИЕ: тест закроется только в выбраную вами дату!</span>
 		</form>
