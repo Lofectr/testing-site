@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'administrator',
     'regTeacher',
     'curatorPanel',
+    'testing',
     'createRefForTesting',
     'django.contrib.admin',
     'django.contrib.auth',

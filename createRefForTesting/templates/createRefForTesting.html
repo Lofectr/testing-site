@@ -1,11 +1,18 @@
 {% extends 'wrapper.html' %}
 {% block content %}
 	{% load static %}
-	<link rel="stylesheet" href="{% static 'createRefForTesting.css' %}">
+	<link rel="stylesheet" href="{% static 'administrator.css' %}">
 	<form action="" method="post" class="content-form">
 		{% csrf_token %}
-		<div class="subtitle">Генерация ссылки</div><br>
-		<input type="submit" value="Сгенерировать ссылку!" name="generateRefButton">
+		<div class="subtitle">Создание ссылки</div><br>
+		<label for="id_listTestUpdate">Выберите тест для создания ссылки: </label><br>
+		<select name="listTest" id="id_listTest">
+			<option value="default" selected="selected" hidden="hidden">Выбирете из списка</option>
+			{% for key,test in listTest.items %}
+				<option value="{{key}}">{{test}}</option>
+			{% endfor %}
+		</select>
+		<input type="submit" value="Сгенерировать ссылку!" name="generateRefButton"><span class="error">{{error.default}}</span>
 	</form><br><br>
 	{% if ref %}
 	Ваша ссылка - <a href="http://192.168.0.208:3000/testing?ref={{ref}}" style="color:#7DB7FF">http://192.168.0.208:3000/testing?ref={{ref}}</a>

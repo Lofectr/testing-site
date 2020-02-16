@@ -4,6 +4,7 @@ from .choice import *
 import login
 from .models import *
 from random import choice
+import datetime
 
 #админ панель
 def administrator(request):
@@ -47,6 +48,10 @@ def administrator(request):
 					context['listTeacherForDelete'] = {}
 					for teacher in login.models.Teacher.objects.all():
 						context['listTeacherForDelete'][teacher.id] = teacher.surname+" "+teacher.name+" | "+teacher.email
+				if current == '8':
+					context['listTestOpen'] = {}
+					for test in Test.objects.filter(isOpen=False):
+						context['listTestOpen'][test.id] = test.title
 
 				if current == '11':
 					if 'searchTeacher' in request.POST:
@@ -157,7 +162,7 @@ def administrator(request):
 					error['type_test'] = 'Выберите тип теста!'
 
 				if not isError:
-					test = Test(title=title, description=description)
+					test = Test(title=title, description=description, isOpen=False)
 					test.save()
 					current = '6' #добавление/изменение вопросов
 					context['listTestForUpdate'] = {}
@@ -250,8 +255,20 @@ def administrator(request):
 				for test in Test.objects.all():
 					context['listTestForDel'][test.id] = test.title
 
+			#Открытие теста
 			elif 'OpenTestButton' in request.POST:
 				current = '8'
+				splitDateEnd = request.POST['dateEnd'].split('-')
+				dateEnd = datetime.datetime(year=int(splitDateEnd[0]),month=int(splitDateEnd[1]),day=int(splitDateEnd[2]))
+				testId = request.POST['listTestOpen']
+				test = Test.objects.get(id=testId)
+				test.end = dateEnd
+				test.isOpen = True
+				test.save()
+
+				context['listTestOpen'] = {}
+				for test in Test.objects.filter(isOpen=False):
+					context['listTestOpen'][test.id] = test.title
 
 			elif 'delTeacherButton' in request.POST:
 				current = '12'
@@ -285,4 +302,3 @@ def administrator(request):
 		return render(request, 'administrator.html', context)
 	else:
 		return redirect('/')
-

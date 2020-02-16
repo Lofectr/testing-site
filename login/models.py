@@ -26,6 +26,7 @@ class Teacher(models.Model):
     name = models.CharField('Имя',max_length=30)
     surname = models.CharField('Фамилия',max_length=50)
     classSchool = models.ForeignKey(SchoolClass, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.email

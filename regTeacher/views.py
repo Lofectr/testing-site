@@ -57,14 +57,13 @@ def regTeacher(request):
 			except:
 				classSchool = SchoolClass(number=numberClass, char=charClass, length=lengthClass, ref='', school=school)
 				classSchool.save()
-				newTeacher = curator.teacher_set.create(email=email, password=password, name=name, surname=surname, classSchool=classSchool)
+				newTeacher = curator.teacher_set.create(email=email, password=password, name=name, surname=surname, classSchool=classSchool) #test=test
 				context['isReg'] = True
 				context['password'] = password
 				return redirect('success-reg/')
 	context['error'] = error
 	context['titlePage'] = 'Регистрация учителей'
 	return render(request, 'regTeacher.html', context)
-
 
 def successReg(request):
 	return render(request, 'successReg.html', {'new_email':email, 'new_password': password, 'new_name': name,'titlePage':'Успешная регистрация!'})
